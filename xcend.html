@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XcendLabs - Next-Gen Technology Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Suisse+Intl:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --purple: #635bff;
+      --emerald: #00eb88;
+      --gray: #f6f9fc;
+    }
+    /* Disable scrolling when mobile menu is active */
+    .no-scroll { overflow: hidden; }
+    
+    /* Global Reset */
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Suisse Intl', sans-serif;
+    }
+    body {
+      background: var(--black);
+      color: white;
+      overflow-x: hidden;
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+    }
+    nav h3 { font-size: 1.8rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    /* Desktop: Only the Contact button is visible */
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+    .nav-links a:hover {
+      opacity: 0.8;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+    .nav-links a.button {
+      background: var(--purple);
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+    }
+    
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 5px;
+    }
+    .hamburger:focus { outline: 2px dashed var(--purple); }
+    .hamburger div {
+      width: 25px; height: 2px;
+      background: white;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: rgba(10,10,10,0.98);
+      padding: 1rem 5%;
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .mobile-menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 1.1rem;
+    }
+    .mobile-menu a.button {
+      background: var(--purple);
+      border-radius: 6px;
+      margin-top: 1rem;
+      text-align: center;
+      border: none;
+    }
+    .hamburger.toggle .line1 {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .hamburger.toggle .line2 { opacity: 0; }
+    .hamburger.toggle .line3 {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+    @media screen and (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      margin-top: -80px;
+      background: linear-gradient(45deg, rgba(99,91,255,0.1) 0%, rgba(0,235,136,0.05) 100%);
+    }
+    .hero-content { max-width: 800px; padding-top: 100px; }
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 2rem;
+      background: linear-gradient(45deg, var(--purple), var(--emerald));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: slideUp 1s ease;
+    }
+    
+    /* Features Section (used as Services) */
+    /* The id "features" lets the "Services" link scroll here */
+    #features.features { padding: 5rem 5%; }
+    .features .feature-card {
+      background: rgba(255,255,255,0.05);
+      padding: 2rem;
+      border-radius: 15px;
+      transition: opacity 1s ease, transform 1s ease;
+      margin-bottom: 2rem;
+    }
+    .feature-card.scroll-animate { opacity: 0; transform: translateY(20px); }
+    .feature-card.scroll-animate.visible { opacity: 1; transform: translateY(-5px); }
+    .scroll-animate { opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease; }
+    .scroll-animate.visible { opacity: 1; transform: translateY(0); }
+    
+    /* Buttons */
+    .button {
+      background: var(--purple);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+    .button:hover { transform: translateY(-2px); }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero { height: 90vh; }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Footer Styling */
+    footer {
+      background: linear-gradient(45deg, #0d0d0d, #1a1a1a);
+      color: #b3b3b3;
+      padding: 3rem 5%;
+      font-size: 0.9rem;
+    }
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .footer-column { flex: 1 1 200px; }
+    .footer-column h3 { color: #ffffff; margin-bottom: 1rem; }
+    .footer-column p,
+    .footer-column li,
+    .footer-column a { color: #b3b3b3; }
+    .footer-column ul { list-style: none; padding: 0; }
+    .footer-column ul li { margin-bottom: 0.5rem; }
+    .footer-column ul li a {
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-column ul li a:hover { color: var(--purple); }
+    .footer-column.follow ul {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .footer-column.follow ul li { margin: 0; }
+    .footer-column.follow ul li a {
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+    .footer-column.follow ul li a:hover { transform: translateY(-2px); }
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      border-top: 1px solid #333;
+      padding-top: 1rem;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <nav role="navigation">
+    <h3>XcendLabs</h3>
+    <div class="nav-links">
+      <!-- Desktop: Contact button scrolls to footer contact section -->
+      <a href="#contact" class="button">Contact</a>
+    </div>
+    <div class="hamburger" aria-label="Toggle mobile menu" tabindex="0">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+    <div class="mobile-menu">
+      <!-- Mobile Menu: Services and Contact -->
+      <a href="#features">Services</a>
+      <a href="#contact" class="button">Contact</a>
+    </div>
+  </nav>
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Accelerating Digital Innovation</h1>
+        <p class="scroll-animate">Enterprise-grade solutions for tomorrow's challenges</p>
+        <div style="margin-top: 2rem;">
+          <a href="#features" class="button scroll-animate">Our Services</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Features Section (used as Services section) -->
+    <section id="features" class="features">
+      <div class="feature-card scroll-animate">
+        <h3>AI &amp; Machine Learning</h3>
+        <p>Transform your business with adaptive intelligence systems</p>
+      </div>
+      <div class="feature-card scroll-animate">
+        <h3>Blockchain Solutions</h3>
+        <p>Secure, decentralized architectures for modern enterprises</p>
+      </div>
+      <div class="feature-card scroll-animate">
+        <h3>Quantum Computing</h3>
+        <p>Pioneering solutions in quantum algorithm development</p>
+      </div>
+      <div class="feature-card scroll-animate">
+        <h3>Social Media Marketing</h3>
+        <p>Engage and grow your audience through targeted social campaigns</p>
+      </div>
+      <div class="feature-card scroll-animate">
+        <h3>Lead Nurturing</h3>
+        <p>Convert prospects into loyal customers with personalized engagement</p>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <div class="footer-container">
+      <div class="footer-column about">
+        <h3>About XcendLabs</h3>
+        <p>XcendLabs is a leading provider of next-generation technology solutions dedicated to accelerating digital innovation and empowering businesses worldwide.</p>
+      </div>
+      <div class="footer-column links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#features">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div id="contact" class="footer-column contact">
+        <h3>Contact Us</h3>
+        <p>Email: info@xcendlabs.com</p>
+        <p>Phone: +1 (555) 123-4567</p>
+        <p>Address: 123 Tech Avenue, Innovation City, USA</p>
+      </div>
+      <div class="footer-column follow">
+        <h3>Follow Us</h3>
+        <ul>
+          <li>
+            <a href="#" aria-label="Twitter">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M22.46 6c-.77.35-1.6.59-2.46.69a4.26 4.26 0 0 0 1.88-2.35 8.49 8.49 0 0 1-2.7 1.03A4.22 4.22 0 0 0 16.11 4a4.24 4.24 0 0 0-4.23 4.23c0 .33.04.66.1.97a12 12 0 0 1-8.74-4.43 4.23 4.23 0 0 0 1.31 5.64A4.18 4.18 0 0 1 2.8 9.7v.05a4.24 4.24 0 0 0 3.4 4.15 4.22 4.22 0 0 1-1.11.15 4.19 4.19 0 0 1-.8-.08 4.24 4.24 0 0 0 3.95 2.93A8.48 8.48 0 0 1 2 18.57 11.97 11.97 0 0 0 8.29 20c7.55 0 11.68-6.26 11.68-11.68l-.01-.53A8.35 8.35 0 0 0 22.46 6z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-3v-11h3v11zm-1.5-12.5c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm13.25 12.5h-3v-5.5c0-1.31-.03-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9v5.6h-3v-11h2.88v1.5h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v6.45z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M22.676 0h-21.352c-.732 0-1.324.592-1.324 1.324v21.352c0 .732.592 1.324 1.324 1.324h11.495v-9.294h-3.129v-3.622h3.129v-2.672c0-3.1 1.893-4.788 4.658-4.788 1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.796.716-1.796 1.765v2.312h3.591l-.467 3.622h-3.124v9.294h6.128c.732 0 1.324-.592 1.324-1.324v-21.352c0-.732-.592-1.324-1.324-1.324z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Instagram">
+              <!-- Reverted to the original Instagram Icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor" d="M12 2.163c3.204 0 3.584.012 4.85.07 1.17.054 1.97.24 2.428.415.583.23 1.004.507 1.445.948.441.441.718.862.948 1.445.175.458.361 1.258.415 2.428.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.054 1.17-.24 1.97-.415 2.428-.23.583-.507 1.004-.948 1.445-.441.441-.862.718-1.445.948-.458.175-1.258.361-2.428.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.054-1.97-.24-2.428-.415-.583-.23-1.004-.507-1.445-.948-.441-.441-.718-.862-1.445-.948-.458-.175-1.258-.361-2.428-.415-1.266-.058-1.646-.07-4.85-.07s-3.584.012-4.85.07c-1.17.054-1.97.24-2.428.415-.583.23-1.004.507-1.445.948-.441.441-.862.862-1.445.948-.458.175-1.258.361-2.428.415-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07zm0-2.163c-3.259 0-3.667.012-4.947.07-1.281.058-2.163.246-2.918.53a5.916 5.916 0 0 0-2.142 1.387 5.916 5.916 0 0 0-1.387 2.142c-.284.755-.472 1.637-.53 2.918-.058 1.28-.07 1.688-.07 4.947s.012 3.667.07 4.947c.058 1.281.246 2.163.53 2.918a5.916 5.916 0 0 0 1.387 2.142 5.916 5.916 0 0 0 2.142 1.387c.755.284 1.637.472 2.918.53 1.28.058 1.688.07 4.947.07s3.667-.012 4.947-.07c1.281-.058 2.163-.246 2.918-.53a5.916 5.916 0 0 0 2.142-1.387 5.916 5.916 0 0 0 1.387-2.142c.284-.755.472-1.637.53-2.918.058-1.28.07-1.688.07-4.947s-.012-3.667-.07-4.947c-.058-1.281-.246-2.163-.53-2.918a5.916 5.916 0 0 0-1.387-2.142 5.916 5.916 0 0 0-2.142-1.387c-.755-.284-1.637-.472-2.918-.53-1.28-.058-1.688-.07-4.85-.07zm0 4.325a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 XcendLabs. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+    
+    function toggleMenu() {
+      hamburger.classList.toggle('toggle');
+      mobileMenu.classList.toggle('active');
+      document.body.classList.toggle('no-scroll', mobileMenu.classList.contains('active'));
+    }
+    
+    hamburger.addEventListener('click', toggleMenu);
+    
+    hamburger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        toggleMenu();
+      }
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.hamburger') && !e.target.closest('.mobile-menu')) {
+        hamburger.classList.remove('toggle');
+        mobileMenu.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+      }
+    });
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) { target.scrollIntoView({ behavior: 'smooth' }); }
+        if (window.innerWidth <= 768) toggleMenu();
+      });
+    });
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { 
+        entry.target.classList.toggle('visible', entry.isIntersecting); 
+      });
+    }, { threshold: 0.1 });
+    
+    document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
